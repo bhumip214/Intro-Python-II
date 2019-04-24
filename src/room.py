@@ -2,7 +2,7 @@
 # description attributes.
 
 class Room:
-    def __init__(self, name, description, list):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
         # The Room class should be extended with a list that holds the Items that are currently in that room.
