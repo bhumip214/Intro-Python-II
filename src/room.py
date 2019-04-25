@@ -22,11 +22,13 @@ class Room:
             for i in self.items_list:
                 print(i.name)
 
+    # look for item's name in items list and return the whole item
     def find_item(self, item_name):
         for item in self.items_list:
             if item.name == item_name:
                 return item
         return None
 
+    # remove a item from the item's list
     def remove_item(self, item):
         self.items_list.remove(item)

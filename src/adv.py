@@ -76,13 +76,15 @@ while True:
 
     # * Prints the current description (the textwrap module might be useful here).
     # * Waits for user input and decides what to do.
-    cmd = input("Enter n, s, e, w or take item or drop item ->")
+
+    cmd = input(
+        "Enter n(north), s(south), e(east), w(west), i(inventory), q(quit), or take item or drop item ->"
+    )
     print(f'You entered {cmd}')
 
     # Split the entered command and see if it has 1 or 2 words.
     split_cmd = cmd.split()
     if len(split_cmd) == 2:
-        print(split_cmd[0])
         if split_cmd[0] == 'take':
             player.on_take(split_cmd[1])
 
@@ -111,6 +113,10 @@ while True:
             player.current_room = player.current_room.w_to
         else:
             print("Movement into this direction is not allowed")
+
+    # Add the i and inventory commands that both show a list of items currently carried by the player.
+    if cmd == "i" or cmd == "inventory":
+        player.print_inventory()
 
     # If the user enters "q", quit the game.
     if cmd == "q":
