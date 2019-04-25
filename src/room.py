@@ -10,7 +10,7 @@ class Room:
         self.items_list = []
 
     # Add the ability to add items to rooms.
-    def add_items(self, item):
+    def add_item(self, item):
         self.items_list.append(item)
 
     # Add functionality to the main loop that prints out all the items that are visible to the player when they are in that room.
@@ -21,3 +21,12 @@ class Room:
             print("Items in room:")
             for i in self.items_list:
                 print(i.name)
+
+    def find_item(self, item_name):
+        for item in self.items_list:
+            if item.name == item_name:
+                return item
+        return None
+
+    def remove_item(self, item):
+        self.items_list.remove(item)
