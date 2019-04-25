@@ -8,22 +8,42 @@ class Player:
         # The inventory can also be a list of items "in" the player.
         self.inventory = []
 
-    # Add capability to add Items to the player's inventory.
-    def pickup_items(self, item):
-        self.inventory.append(item)
-
     # Called when player wants to take an item from the room
     def on_take(self, item_name):
         # check your item in current room
         item = self.current_room.find_item(item_name)
         if item is not None:
-            # Then allow user to add that item to his/her inventory
-            self.pickup_items(item)
+            # add that item to player's inventory
+            self.inventory.append(item)
             # Remove the item from the current room
             self.current_room.remove_item(item)
             print(f'{item_name} is added to your inventory!')
         else:
-            print('Item not found')
+            print('Item not found!')
+
+    # check for item's name in inventory and return the whole item else return none
+    def check_inventory(self, item_name):
+        for item in self.inventory:
+            if item.name == item_name:
+                return item
+        return None
+
+    # remove a item from the inventory
+    def remove_item(self, item):
+        self.inventory.remove(item)
+
+    # Called when player wants to drop an item from inventory
+    def on_drop(self, item_name):
+        # check your item in inventory
+        item = self.check_inventory(item_name)
+        if item is not None:
+            # Remove the item from the inventory
+            self.remove_item(item)
+            # add that item to room's item list
+            self.current_room.add_item(item)
+            print(f'{item_name} is dropped from your inventory!')
+        else:
+            print('Item not found!')
 
     # print the list of items in inventory
     def print_inventory(self):

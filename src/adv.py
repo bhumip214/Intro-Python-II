@@ -68,18 +68,19 @@ player = Player("Bhumi", room['outside'])
 
 # Write a loop that:
 while True:
-    # * Prints the current room name
+    # * Prints the current room name and description
     print(
-        f'You are currently in {player.current_room.name} \n{player.current_room.description}'
+        f'You are currently in {player.current_room.name} \nDescription: {player.current_room.description}'
     )
     player.current_room.print_items()
 
-    # * Prints the current description (the textwrap module might be useful here).
-    # * Waits for user input and decides what to do.
-
-    cmd = input(
-        "Enter n(north), s(south), e(east), w(west), i(inventory), q(quit), or take item or drop item ->"
+    # Guide user to enter appropriate commands
+    print(
+        'Choose any command: n(north), s(south), e(east), w(west), i(inventory), q(quit), or take item(from room) or drop item(from your inventory)'
     )
+
+    #  Waits for user input and decides what to do.
+    cmd = input("Enter --->")
     print(f'You entered {cmd}')
 
     # Split the entered command and see if it has 1 or 2 words.
@@ -87,6 +88,8 @@ while True:
     if len(split_cmd) == 2:
         if split_cmd[0] == 'take':
             player.on_take(split_cmd[1])
+        elif split_cmd[0] == 'drop':
+            player.on_drop(split_cmd[1])
 
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
@@ -96,29 +99,32 @@ while True:
         else:
             print("Movement into this direction is not allowed")
 
-    if cmd == "s":
+    elif cmd == "s":
         if player.current_room.s_to is not None:
             player.current_room = player.current_room.s_to
         else:
             print("Movement into this direction is not allowed")
 
-    if cmd == "e":
+    elif cmd == "e":
         if player.current_room.e_to is not None:
             player.current_room = player.current_room.e_to
         else:
             print("Movement into this direction is not allowed")
 
-    if cmd == "w":
+    elif cmd == "w":
         if player.current_room.w_to is not None:
             player.current_room = player.current_room.w_to
         else:
             print("Movement into this direction is not allowed")
 
     # Add the i and inventory commands that both show a list of items currently carried by the player.
-    if cmd == "i" or cmd == "inventory":
+    elif cmd == "i" or cmd == "inventory":
         player.print_inventory()
 
     # If the user enters "q", quit the game.
-    if cmd == "q":
+    elif cmd == "q":
         print("Good bye!")
         break
+
+    else:
+        print("Invalid input! Try again!")
