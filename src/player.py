@@ -11,3 +11,12 @@ class Player:
     # Add capability to add Items to the player's inventory.
     def pickup_items(self, item):
         self.inventory.append(item)
+
+    def on_take(self, item_name):
+        item = self.current_room.find_item(item_name)
+        if item is not None:
+            self.pickup_items(item)
+            self.current_room.remove_item(item)
+            print(f'{item_name} is taken')
+        else:
+            print('Item not found')
